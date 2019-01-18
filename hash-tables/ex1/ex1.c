@@ -22,10 +22,18 @@ Answer *get_indices_of_item_weights(int *weights, int length, int limit)
   for(int i = 0; i < length; i++){
     int search_for = hash_table_retrieve(ht, limit - weights[i]);
     if(search_for != -1){ // if we find a match for the search_for index, store values and return
-      answer->index_1 = search_for; // we can use "search_for" here because the function returns pair->value, not just pair
-      answer->index_2 = i;
-      destroy_hash_table(ht);
-      return answer;
+      
+      if(i > search_for){ // ensure that the higher index appears first in index_1
+        answer->index_1 = i;
+        answer->index_2 = search_for;
+        destroy_hash_table(ht);
+        return answer;
+      } else {
+        answer->index_1 = search_for; // we can use "search_for" here because the function returns pair->value, not just pair
+        answer->index_2 = i;
+        destroy_hash_table(ht);
+        return answer;
+      } 
     }
   }
   return NULL;
