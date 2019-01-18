@@ -8,7 +8,55 @@ Answer *get_indices_of_item_weights(int *weights, int length, int limit)
   HashTable *ht = create_hash_table(16);
 
   // YOUR CODE HERE
+  if(length < 2){ // return null if less than 2 weights given
+    return NULL;
+  }
 
+  // store each weight as a key into a hash table
+  for(int i = 0; i < length; i++){
+    hash_table_insert(ht, weights[i], 0);
+  }
+
+  // edit each value to be the item's index
+  for(int i = 0; i < length; i++){
+    if(ht->storage[i] != NULL){
+      if(ht->storage[i]->next == NULL){
+        ht->storage[i]->value = i;
+      } else {
+        LinkedPair *current_node = ht->storage[i];
+        while(current_node->next != NULL){
+          current_node->value = i;
+          current_node = current_node->next;
+        }
+      }
+    } 
+  }
+
+  // look for limit-weight in the storage
+  for(int i = 0; i < length; i++){
+    if(ht->storage[i] != NULL){
+      int search_for = limit - ht->storage[i]->key;
+      if(search_for < limit && ht->storage[search_for] != NULL){
+        printf("search for: %i\n", ht->storage[search_for]->key);
+        if(ht->storage[i]->key + ht->storage[search_for]->key == limit){
+          printf("VALUES FOUND!");
+        }
+      }
+      // printf("search for: %i\n", search_for);
+    }
+    
+    // if(ht->storage[search_for] != NULL){
+    //   printf("found value: %i", ht->storage[search_for]->value);
+    // }
+
+    // if(ht->storage[i] != NULL){
+
+    //   printf("%i\n", ht->storage[i]->value);
+    // }
+  }
+
+
+  printf("%i\n", limit);
   return NULL;
 }
 
