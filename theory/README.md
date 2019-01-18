@@ -67,11 +67,13 @@ A     B     C      carry   sum
 0     0     0        0      0
 0     0     1        0      1
 0     1     0        0      1
-0     1     1        0      0
+0     1     1        1      0
 1     0     0        0      1
-1     0     1        0      0
-1     1     0        0      0
+1     0     1        1      0
+1     1     0        1      0
 1     1     1        1      1
 ```
 * SUM = A ^ B ^ C
-* CARRY = A && B && C
+* CARRY = A && B || B && C || A && C
+ 
+Carry equation accounts for all possible additive truth permutations
